@@ -57,6 +57,9 @@ resource "google_compute_instance_template" "nginx_template" {
   network_interface {
     network = "default"
     # No public IP assigned; traffic flows through the Load Balancer
+    access_config {
+      # Ephemeral public IP is not assigned to instances in a regional ALB setup
+    }
   }
 
   # Install NGINX and set up a custom index page on boot
