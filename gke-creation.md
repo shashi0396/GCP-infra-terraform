@@ -2,7 +2,7 @@ gcloud config set project YOUR_PROJECT_ID
 gcloud services enable container.googleapis.com
 
 gcloud container clusters create echo-cluster \
-    --num-nodes=2 \
+    --num-nodes=1 \
     --machine-type=e2-standard-2 \
     --zone=us-east4-b
 
