@@ -2,6 +2,7 @@
 variable "project_id" {
   description = "Your GCP Project ID"
   type        = string
+  default     = "sunlit-loop-417711"
 }
 
 variable "region" {

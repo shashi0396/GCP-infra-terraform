@@ -14,12 +14,12 @@ resource "google_compute_region_health_check" "nginx_health_check" {
 
 # 2. Regional Backend Service (EXTERNAL_MANAGED)
 resource "google_compute_region_backend_service" "nginx_backend" {
-  name                  = "nginx-regional-backend"
-  region                = var.region
-  port_name             = "http"
-  protocol              = "HTTP"
-  health_checks         = [google_compute_region_health_check.nginx_health_check.id]
-  
+  name          = "nginx-regional-backend"
+  region        = var.region
+  port_name     = "http"
+  protocol      = "HTTP"
+  health_checks = [google_compute_region_health_check.nginx_health_check.id]
+
   # Crucial change for Regional External ALB
   load_balancing_scheme = "EXTERNAL_MANAGED"
 
@@ -46,14 +46,14 @@ resource "google_compute_region_target_http_proxy" "nginx_proxy" {
 
 # 5. Regional Forwarding Rule (Frontend IP)
 resource "google_compute_forwarding_rule" "nginx_forwarding_rule" {
-  name                  = "nginx-regional-forwarding-rule"
-  region                = var.region
-  target                = google_compute_region_target_http_proxy.nginx_proxy.id
-  port_range            = "80"
-  
+  name       = "nginx-regional-forwarding-rule"
+  region     = var.region
+  target     = google_compute_region_target_http_proxy.nginx_proxy.id
+  port_range = "80"
+
   # Must match the backend service
-  load_balancing_scheme = "EXTERNAL_MANAGED" 
-  
+  load_balancing_scheme = "EXTERNAL_MANAGED"
+
   # Must be in the same network as the proxy-only subnet
-  network               = "default"
+  network = "default"
 }
